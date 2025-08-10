@@ -1,0 +1,1763 @@
+---
+title: 
+author: 
+date: 
+output:
+  pdf_document:
+    latex_engine: xelatex
+  word_document: default
+geometry: margin=1in
+csl: apa.csl
+bibliography: packages.bib
+header-includes:
+  - \usepackage{booktabs}     
+  - \usepackage{tabularx}     
+  - \usepackage{caption}      
+  - \usepackage{float}   
+  - \usepackage{setspace}
+  - \doublespacing    
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+\begin{titlepage}
+\centering
+\Huge \textbf{Analyzing the Relationship Between Demographic, Geographic, and Economic Factors and Cost-Burdened Housing in Georgia}
+  
+\vspace{.4in}
+\Large
+\textbf{Authors:} \\[0.5cm]
+Jason Withrow, Ken Wong, Rajath Prabhakar, William Hudson
+  
+\vspace{0.2in}
+\textbf{Client:} \\[0.5cm]
+The Carl Vinson Institute of Government (CVIOG) at the University of Georgia:  
+Scott King, Taylor Hafley, James Byars
+
+\vspace{.2in}
+\textbf{Department:} \\[0.5cm]
+Department of Statistics, University of Georgia
+  
+\vspace{0.2in}
+\textbf{Course:} \\[0.5cm]
+STAT 5020W: Statistical Capstone Course II
+  
+\vfill
+\Large
+Date: April 30, 2025
+\end{titlepage}
+
+\newpage
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+
+```
+
+## Introduction
+
+    The Carl Vinson Institute of Government (CVIOG) at the University of
+Georgia provides research, consulting, and training services to
+Georgia's state and local governments. It attempts to support policy
+development and decision-making by providing data-driven insights to
+help improve public services and the well-being of Georgia residents.
+But, according to a 2023 article by Chris Dowd, there is one such
+problem compromising the well-being of Georgia residents: housing
+insecurity (Dowd, 2023).
+
+    According to Dowd, in Athens, more than half of its residents are
+housing burdened, spending more than 30% of their income on housing. For
+those earning minimum wage or close to minimum wage, the situation is
+much more dire; they must rely on low-income housing options such as
+Section 8. This is not only an issue of supply, but an issue of
+corporate greed. GA Code 44-7-19, passed in 1981, prohibits counties and
+municipalities from enacting rent control, effectively allowing
+landlords to raise rents without limits(Georgia Code, 2024, § 44-7-19).
+
+    Consequently, since the 2008 housing crash, hedge funds and private
+equity investors have been buying up starter homes and apartments,
+especially in Atlanta and other big cities, leaving properties vacant to
+appreciate in value or to be transformed into "luxury rentals" (Perry,
+2023). In metro Atlanta alone, these bulk buyers have accumulated more
+than 65,000 single-family homes over the past decade, with 11 companies
+owning over 1,000 homes each.
+
+    Even though these corporate buyers did not create the housing
+crisis, they greatly exacerbated it. Metro Atlanta home values rose
+across the board from 2012 to 2022. The same analysis found that they
+climbed more sharply in places where investors bought more houses. In
+fact, in the 30 ZIP codes with the most investor-owned properties, home
+values appreciated at nearly twice the annual rate as the 30 ZIP codes
+where investors own the least. As of this writing, the six largest
+single-family rental firms own 63% of the homes in metro Atlanta.
+
+## Project Focus
+
+    The goal of this study is to analyze the housing burden in Georgia
+by investigating the demographic, economic, and geographic features that
+contribute to the challenges of housing affordability and access.
+Specifically, we will examine how factors such as income, race,
+education, and location influence housing affordability and access
+across the state. Understanding these relationships will inform policies
+with the goal of improving housing affordability and accessibility
+across the state of Georgia. This project is being conducted in
+collaboration with the CVIOG, who concentrate on improving the
+effectiveness of government through research and analysis. Our findings
+will help CVIOG support local governments and communities across Georgia
+in addressing the housing burden crisis.
+
+## Research Questions
+
+    This study addresses multiple research questions as part of a
+broader investigation into housing affordability and accessibility in
+Georgia, with a primary focus on the first research question:
+
+1.  What is the relationship between demographic, geographic, and
+    economic features collected by the Census Bureau's American
+    Community Survey and the percentage of owner- and renter-occupied
+    housing that is classified as cost-burdened (e.g., 30% of their
+    income dedicated to housing costs)?
+
+2.  What demographic, geographic, and economic features collected in the
+    Census Bureau's American Community Survey influence the housing mix
+    (e.g., owner-occupied, renter-occupied, owner-vacant, and
+    renter-vacant) in each geographical area in Georgia?
+
+3.  Is there a statistically driven and reliable index or indices that
+    provides a comprehensive understanding of housing availability,
+    accessibility, and affordability that highlights a geographic area's
+    housing security or insecurity, similar to the concept of food
+    deserts?
+
+## Data Description
+
+    The data for this project is sourced from the ACS which is conducted
+by the U.S. Census Bureau. The ACS collects data continuously throughout
+the year, with approximately 3.5 million households surveyed annually.
+This large sample size allows the survey to generate reliable estimates
+for all types of communities in Georgia. Households are selected using a
+random sampling method, ensuring that all areas are represented. Data
+collected from the sampled households are then weighted by the Census
+Bureau to account for demographic and geographic differences, allowing
+the survey to produce accurate estimates that are representative of the
+entire population of Georgia. The demographic data collected by the
+survey focuses on topics such as income, housing, education, employment,
+transportation, and more. Contrary to the decennial census where
+everyone is counted the ACS surveys a sample of households each year and
+uses that data and their own methods to extrapolate that data to
+represent total populations of the United States.
+
+    The two main estimates used in this analysis are 1--Year and 5-Year
+estimates. The 1--Year estimates are straightforward and are only
+estimates for that year. On the other hand the 5--Year estimates are a
+bit different in that they represent a 5 year period such as 2017--2021.
+Rather than summing data from each year, the Census Bureau averages it
+to produce an estimate that reflects a typical year within the period.
+
+    The data are split into multiple tables each focusing on specific
+demographic information. For example, separate tables detail cost-burden
+for owner-occupied and renter occupied housing and are further broken
+down by various race categories, age groups, and other demographic
+features. In addition to using the ACS data as presented by the U.S.
+Census Bureau, a separate aggregated dataset was created specifically
+for this analysis. The dataset we used was constructed using the 2023
+ACS 5-Year estimates and contains 159 rows corresponding to each county
+in Georgia. The dataset includes a variety of variables (listed in Table
+1) that capture demographic, economic, and housing-related information
+across geographic regions.
+
+\begin{table}[H] % Position preference: here, top, bottom, page
+    \centering % Center the table horizontally
+    \caption{Description of Variables Used in the Analysis}
+    \label{tab:variable_descriptions} % Label for cross-referencing
+    \begin{tabularx}{\textwidth}{@{} l X @{}} % l: left-aligned column, X: auto-width wrapping text column
+        \toprule
+        \textbf{Variable Name} & \textbf{Description} \\
+        \midrule
+        \texttt{GEOID} & Geographic identifier for the county (FIPS Code). \\
+        \texttt{NAME} & Name of the county. \\
+        \texttt{MedHouseIncome} & Median household income in the county. \\
+        \texttt{Pct\_CostBurdened\_Owners} & Dependent Variable: Percentage of owner-occupied housing units classified as cost-burdened. \\
+        \texttt{Pct\_CostBurdened\_Renter} & Dependent Variable: Percentage of renter-occupied housing units classified as cost-burdened. \\
+        \multicolumn{2}{@{}l}{\textit{Cost Burden by Age}} \\ % Subheading example
+         \texttt{Pct\_CostBurdened\_15\_24} & Percentage of all individuals aged 15-24 classified as cost-burdened. \\
+         \texttt{Pct\_CostBurdened\_25\_34} & Percentage of all individuals aged 25-34 classified as cost-burdened. \\
+         \texttt{Pct\_CostBurdened\_35\_64} & Percentage of all individuals aged 35-64 classified as cost-burdened. \\
+         \texttt{Pct\_CostBurdened\_65\_plus} & Percentage of all individuals aged 65 and over classified as cost-burdened. \\
+        \multicolumn{2}{@{}l}{\textit{Cost Burden by Age (Renters)}} \\ % Subheading example
+         \texttt{Pct\_RenterCostBurdened\_15\_24} & Percentage of renters aged 15-24 classified as cost-burdened. \\
+         \texttt{Pct\_RenterCostBurdened\_25\_34} & Percentage of renters aged 25-34 classified as cost-burdened. \\
+         \texttt{Pct\_RenterCostBurdened\_35\_64} & Percentage of renters aged 35-64 classified as cost-burdened. \\
+         \texttt{Pct\_RenterCostBurdened\_65\_plus} & Percentage of renters aged 65 and over classified as cost-burdened. \\
+        \multicolumn{2}{@{}l}{\textit{Cost Burden by Race (Owners)}} \\ % Subheading example
+         \texttt{Pct\_CostBurdened\_White\_Owners} & Percentage of White homeowners classified as cost-burdened. \\
+         \texttt{Pct\_CostBurdened\_Black\_Owners} & Percentage of Black homeowners classified as cost-burdened. \\
+         \texttt{Pct\_CostBurdened\_Other\_Owners} & Percentage of homeowners of Other races (Native, Asian, Pacific Islander combined) classified as cost-burdened. \\
+        \multicolumn{2}{@{}l}{\textit{Cost Burden by Race (Renters)}} \\ % Subheading example
+         \texttt{Pct\_CostBurdened\_White\_Renters} & Percentage of White renters classified as cost-burdened. \\
+         \texttt{Pct\_CostBurdened\_Black\_Renters} & Percentage of Black renters classified as cost-burdened. \\
+         \texttt{Pct\_CostBurdened\_Other\_Renters} & Percentage of renters of Other races (Native, Asian, Pacific Islander combined) classified as cost-burdened. \\
+        \multicolumn{2}{@{}l}{\textit{County Characteristics}} \\ % Subheading example
+         \texttt{isUrban} & Indicator variable denoting whether the county is urban (e.g., 1) or rural (e.g., 0). \\
+         \texttt{Unemployment\_Rate} & Unemployment rate in the county. \\
+         \texttt{Pct\_Bachelors\_Higher} & Percentage of the county population (typically aged 25+) with a bachelor's degree or higher education level. \\
+        \bottomrule
+    \end{tabularx}
+    \par\medskip % Adds a small vertical space before the note
+    \footnotesize % Use a smaller font size for the note
+    \textit{Note:} Variables derived from the 2023 American Community Survey (ACS) 5-Year Estimates. Cost-burdened defined as spending 30\% or more of household income on housing costs. The specific definition/coding for \texttt{isUrban} should be detailed in the text. The 'Other' race category combines Native, Asian, and Pacific Islander populations.
+\end{table}
+
+    When exploring census data, there are many tables with row values
+marked "not computed." This is often a result of incomplete information
+provided by individuals or households. The official census documentation
+advises removing rows with "not computed" values, but the aggregated
+dataset did not include any of such values. Instead, as a result of the
+computations used to obtain certain columns in the aggregated set, new
+NA values were introduced. Figure 1 shows a histogram of the missingness
+present in the new aggregated dataset. These NA values function as zero,
+but were labeled as NA due to special circumstances in which
+calculations involved dividing by zero. Thus, these NA values were
+replaced by zeroes, and there is no further missingness present.
+
+![Histogram of Missingness](missing-hist.png){width="80%"}
+
+    The analysis was conducted using *R* [@base] with an emphasis on the
+use of the *tidycensus* [@tidycensus] package, which simplifies
+accessing the ACS data by connecting to Census Bureau API. The API
+allows for users to directly retrieve data into R. This package
+facilitates data wrangling tasks, such as filtering and aggregating
+variables. Along with that *tidycensus* integrates with visualization
+libraries in R, allowing for seamless creation of maps and charts to
+illustrate housing burden trends across the various regions of Georgia.
+Instead of summing up data from each year, the Census Bureau averages
+the data to produce an estimate that reflects a typical year within the
+5-year period
+
+\newpage
+
+## Exploratory Data Analysis (EDA)
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+# Load Packages
+library(tidycensus)
+library(tidyverse)
+library(ggplot2)
+library(tigris)
+library(dplyr)
+library(sf)
+library(gridExtra)
+
+# Regression Libraries
+library(car)
+library(lmtest)
+library(heplots)
+library(nlme)
+library(stargazer)
+library(PMCMRplus)
+```
+
+    To provide proper context for the forthcoming analysis, it is
+important to first consider the summary statistics of the overall
+demographics of Georgia. The plot of median income in Georgia (Figure 2)
+highlights the income disparity across the state, with the highest
+median incomes centered around metro Atlanta, while the more rural
+regions display notably lower median incomes.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Median Household Income (2020)", fig.width=5, fig.height=4}
+options(tigris_use_cache = TRUE)
+
+ga <- get_acs(
+  state = "GA",
+  geography = "tract",
+  variables = "B19013_001",
+  geometry = TRUE,
+  year = 2020,
+  cache_table = TRUE,
+  progress = FALSE
+)
+
+ga %>%
+  ggplot(aes(fill = estimate)) + 
+  geom_sf(color = NA) + 
+  scale_fill_viridis_c(option = "magma") + ggtitle("Median Household Income in Georgia")
+```
+
+    Next, the plot of housing cost burden by county (Figure 3) reveals
+the distribution of cost-burdened housing across different geographic
+regions in Georgia. Figure 3 displays that housing cost burden is
+distributed rather evenly across the state, regardless of the median
+income of the respective area. The concentration of higher median
+incomes in metropolitan areas is expected; however, areas of higher
+median income do not appear to correspond with lower levels of housing
+burden. This suggests that rising housing costs in cities may create
+affordability challenges even for higher earning households. The data
+was processed using *dplyr* [@dplyr] for data manipulation and tools
+from *tigris* [@tigris] for spatial plots. Additionally, *ggplot2*
+[@ggplot2] was used for data visualization. Lastly, *sf* [@sf] was used
+for managing geospatial objects. The packages *dplyr* and *ggplot2* come
+from *tidyverse* [@tidyverse], a collection of R packages for data
+manipulation, visualization and other tasks.
+
+\clearpage
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Housing Cost Burden by County (ACS 2017-2021)", fig.width=7, fig.height=4}
+options(tigris_use_cache = TRUE)
+
+# Define variables for housing cost burden and total households
+acs_vars <- c(
+  renter_burdened = "B25070_007",         # Renters paying 30-34.9% of income
+  renter_severely_burdened = "B25070_008", # Renters paying 35% or more of income
+  owner_burdened = "B25091_010",           # Owners with mortgage paying 30-34.9% of income
+  owner_severely_burdened = "B25091_011",  # Owners with mortgage paying 35% or more of income
+  total_households = "B25003_001"          # Total households
+)
+
+# Step 1: Download ACS data for Georgia counties
+housing_burden_data <- get_acs(
+  geography = "county",
+  state = "GA",
+  variables = acs_vars,
+  year = 2021,
+  survey = "acs5",
+  output = "wide"
+)
+
+# Step 2: Calculate total burdened households
+housing_burden_data <- housing_burden_data %>%
+  mutate(
+    renter_burdened_total = renter_burdenedE + renter_severely_burdenedE,
+    owner_burdened_total = owner_burdenedE + owner_severely_burdenedE,
+    total_burdened_households = renter_burdened_total + owner_burdened_total
+  )
+
+# Step 3: Calculate percentage of cost-burdened households
+housing_burden_data <- housing_burden_data %>%
+  mutate(
+    housing_burden_percent = (total_burdened_households / total_householdsE) * 100
+  )
+
+# Step 4: Load Georgia county boundaries
+georgia_counties <- counties(state = "GA", cb = TRUE, class = "sf")
+
+# Step 5: Join the housing burden data with county geometry
+housing_burden_map <- georgia_counties %>%
+  left_join(housing_burden_data, by = "GEOID")
+
+# Step 6: Plot the housing burden by county
+ggplot(housing_burden_map) +
+  geom_sf(aes(fill = housing_burden_percent), color = "black", lwd = 0.2) +
+  scale_fill_viridis_c(
+    option = "plasma",
+    name = "Housing Burden (%)",
+    na.value = "grey80"
+  ) +
+  labs(
+    title = "Housing Cost Burden by County",
+    subtitle = "% of Households Spending More Than 30% of Income on Housing",
+    caption = "Data Source: ACS via tidycensus"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 16, hjust = 0.5),
+    plot.subtitle = element_text(size = 12, hjust = 0.5),
+    plot.caption = element_text(size = 8),
+    legend.position = "right"
+  )
+```
+
+    When examining population and income by race (Figures 4 & 5),
+economic and demographic inequities become more pronounced. White
+populations make up the largest demographic, appearing spread out across
+the state, with a notable absence in urban Atlanta. Black populations
+also make up a large proportion of the population, but tend to
+concentrate in urban Atlanta, as well as central and southern regions of
+Georgia. Hispanic and Asian populations, on the other hand, make up
+lower proportions of the population and are centered primarily around
+metro Atlanta. The plot of median income by race displays the greatest
+median household incomes in White households, particularly in suburban
+areas, while Black and Hispanic households consistently report lower
+median household incomes. The Asian population tends to have greater
+median household incomes on average in comparison to Black and Hispanic
+populations, but this wealth is generally centered around metro Atlanta.
+The income and population disparities present in the plots emphasize the
+greater vulnerability to housing insecurity for Black and Hispanic
+households.
+
+\clearpage
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Population Distribution by Race (2020 ACS 1-year)", fig.width=12, fig.height=12}
+racevars <- c(White = "P2_005N", 
+              Black = "P2_006N", 
+              Asian = "P2_008N", 
+              Hispanic = "P2_002N")
+
+ga2 <- get_decennial(
+  geography = "tract",
+  variables = racevars,
+  state = "GA",
+  geometry = TRUE,
+  summary_var = "P2_001N",
+  year = 2020,
+  sumfile = "pl",
+  cache_table = TRUE
+) 
+
+ga2 %>%
+  mutate(percent = 100 * (value / summary_value)) %>%
+  ggplot(aes(fill = percent)) +
+  facet_wrap(~variable) +
+  geom_sf(color = NA) +
+  theme_void() + 
+  scale_fill_viridis_c() + 
+  labs(fill = "% of population\n(2020 Census)") + ggtitle("Population Distribution by Race")+
+  theme(
+    plot.title = element_text(size = 40),  # Increase title size
+    legend.title = element_text(size = 20),  # Increase legend title size
+    legend.text = element_text(size = 18),
+    strip.text = element_text(size = 20)# Increase legend text size
+  )
+```
+
+\clearpage
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Median Household Income by Race in Georgia (2021 ACS 5-year)", fig.width=12, fig.height=12}
+# Define ACS variables for median household income by race
+income_vars <- c(
+  White = "B19013A_001",     # Median household income for White alone households
+  Black = "B19013B_001",     # Median household income for Black or African American alone households
+  Asian = "B19013D_001",     # Median household income for Asian alone households
+  Hispanic = "B19013I_001"   # Median household income for Hispanic or Latino households
+)
+
+ga_income <- get_acs(
+  geography = "tract",
+  variables = income_vars,
+  state = "GA",
+  geometry = TRUE,
+  year = 2021,  # Most recent year for ACS 5-year estimates
+  survey = "acs5",
+  cache_table = TRUE
+)
+
+# Plot the median household income by race, faceted by racial group
+ga_income %>%
+  ggplot(aes(fill = estimate)) +
+  facet_wrap(~variable) +
+  geom_sf(color = NA) +
+  theme_void() +
+  scale_fill_viridis_c(option = "plasma", name = "Median Income\n($)") +
+  labs(title = "Median Household Income by Race")+
+   theme(
+    plot.title = element_text(size = 40),  # Increase title size
+    legend.title = element_text(size = 20),  # Increase legend title size
+    legend.text = element_text(size = 18),
+    strip.text = element_text(size = 20)# Increase legend text size
+  )
+```
+
+\newpage
+
+    A closer examination of the plots of burdened homeowners and renters
+by race (Figures 6 and 7) accentuates the racial inequity present in
+Figures 5. These plots display the mean percentage of cost-burdened
+owners and renters across Georgia's 159 counties.Among homeowners, Black
+homeowners and renters account for the greatest mean percentage of cost
+burdened housing. In contrast White homeowners have the lowest mean
+percentage and White renters and Other renters have about the same mean.
+These findings suggest that there may exist systemic barriers, such as
+wage gaps and discriminatory housing practices, that disproportionately
+affect minority communities. Particularly, renters face rising
+challenges due to increasing rental costs and a lack of affordable
+housing options in both rural and metropolitan areas.
+
+```{r, echo=FALSE, fig.cap="Mean Percentage of Cost-Burdened Owner-Occupied Households by Race in Georgia (ACS 5-Year Estimates, 2019-2023)", fig.width=12}
+library(knitr)
+cviogData = read.csv("DATA/ga_housing_data.csv")
+cviogData <- cviogData %>%
+  mutate(GEOID = as.character(GEOID))
+
+
+cols <- c("Pct_CostBurdened_White_Owners", 
+          "Pct_CostBurdened_Black_Owners", 
+          "Pct_CostBurdened_Other_Owners") 
+         
+mean_values <- sapply(cviogData[cols], mean, na.rm = TRUE)
+
+
+race_labels <- c("White", "Black", "Other")
+mean_df <- data.frame(
+  RaceGroup = race_labels,
+  MeanPercentage = as.numeric(mean_values)
+)
+
+
+ggplot(mean_df, aes(x = RaceGroup, y = MeanPercentage, fill = RaceGroup)) +
+  geom_col(width = 0.55, color = "#333333", linewidth = 0.3) +
+  scale_fill_manual(values = c("#8dd3c7", "#80b1d3", "#b3de69")) +
+  geom_text(aes(label = round(MeanPercentage, 1)), 
+            vjust = -0.5, size = 4.2, color = "#444444") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) + 
+  labs(title = "Mean Cost-Burdened Percentage of Owners by Race Group",
+       x = "Race Group",
+       y = "Mean Percentage") +
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+    axis.title = element_text(face = "bold"),
+    panel.grid.major.y = element_line(color = "#eeeeee"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "white", color = NA),
+    plot.background = element_rect(fill = "white", color = NA),
+    legend.position = "none"
+  )
+```
+
+```{r, echo=FALSE, fig.cap="Mean Percentage of Cost-Burdened Renter Occupied Households by Race in Georgia (ACS 5-Year Estimates, 2019-2023", fig.width=12}
+
+cols <- c("Pct_CostBurdened_White_Renters", 
+          "Pct_CostBurdened_Black_Renters", 
+          "Pct_CostBurdened_Other_Renters") 
+
+mean_values <- sapply(cviogData[cols], mean, na.rm = TRUE)
+
+# Friendly labels
+race_labels <- c("White", "Black", "Other")
+mean_df <- data.frame(
+  RaceGroup = race_labels,
+  MeanPercentage = as.numeric(mean_values)
+)
+
+# Sleek, modern plot with 3 distinct colors
+ggplot(mean_df, aes(x = RaceGroup, y = MeanPercentage, fill = RaceGroup)) +
+  geom_col(width = 0.55, color = "#333333", linewidth = 0.3) +
+  scale_fill_manual(values = c("#8dd3c7", "#80b1d3", "#b3de69")) +  # 3 custom colors for each race group
+  geom_text(aes(label = round(MeanPercentage, 1)), 
+            vjust = -0.5, size = 4.2, color = "#444444") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +  # Adds 10% space at top
+  labs(title = "Mean Cost-Burdened Percentage of Renters by Race Group",
+       x = "Race Group",
+       y = "Mean Percentage") +
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+    axis.title = element_text(face = "bold"),
+    panel.grid.major.y = element_line(color = "#eeeeee"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "white", color = NA),
+    plot.background = element_rect(fill = "white", color = NA),
+    legend.position = "none"
+  )
+
+
+
+```
+
+\clearpage
+
+    The addition of age adds another layer of complexity to the
+analysis. As seen in the plots of the mean percentage of cost-burdened
+homeowners and renters by age across Georgia's 159 counties (Figure 8 &
+9), households of those aged 15--24 experience the greatest levels of
+cost burden, for both renters and homeowners. A simple explanatory
+hypothesis is that lower ages correlate with a lower income,
+specifically amongst entry-level workers. Homeowners over the age of 65
+also face greater levels of housing burden. This is possibly a result of
+fixed retirement incomes, as well as rising property taxes.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Mean Percentage of Cost-Burdened Owner-Occupied Households by Age in Georgia (ACS 5-Year Estimates, 2019-2023)", fig.width=8, fig.height=3}
+#INSERT CODE FOR PERCENTAGE COST-BURDENED HOMEOWNERS HERE
+
+
+cols <- c("Pct_CostBurdened_15_24", 
+          "Pct_CostBurdened_25_34", 
+          "Pct_CostBurdened_35_64", 
+          "Pct_CostBurdened_65_plus")
+mean_values <- sapply(cviogData[cols], mean, na.rm = TRUE)
+
+# Friendly labels
+age_labels <- c("15–24", "25–34", "35–64", "65+")
+mean_df <- data.frame(
+  AgeGroup = age_labels,
+  MeanPercentage = as.numeric(mean_values)
+)
+
+# Sleek, modern plot with 4 distinct colors
+ggplot(mean_df, aes(x = AgeGroup, y = MeanPercentage, fill = AgeGroup)) +
+  geom_col(width = 0.55, color = "#333333", linewidth = 0.3) +
+  scale_fill_manual(values = c("#8dd3c7", "#80b1d3", "#b3de69", "#a6cee3")) +  # 4 custom colors
+  geom_text(aes(label = round(MeanPercentage, 1)), 
+            vjust = -0.5, size = 4.2, color = "#444444") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +  # Adds 10% space at top
+  labs(title = "Mean Cost-Burdened Percentage of Homeowners by Age Group",
+       x = "Age Group",
+       y = "Mean Percentage") +
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+    axis.title = element_text(face = "bold"),
+    panel.grid.major.y = element_line(color = "#eeeeee"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "white", color = NA),
+    plot.background = element_rect(fill = "white", color = NA),
+    legend.position = "none"
+  )
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Mean Percentage of Cost-Burdened Renter-Occupied Households by Age in Georgia (ACS 5-Year Estimates, 2019-2023)", fig.width=8, fig.height=3}
+#INSERT CODE FOR PERCENTAGE COST-BURDENED RENTERS HERE
+cols <- c("Pct_RenterCostBurdened_15_24", 
+          "Pct_RenterCostBurdened_25_34", 
+          "Pct_RenterCostBurdened_35_64", 
+          "Pct_RenterCostBurdened_65_plus")
+mean_values <- sapply(cviogData[cols], mean, na.rm = TRUE)
+
+# Friendly labels
+age_labels <- c("15–24", "25–34", "35–64", "65+")
+mean_df <- data.frame(
+  AgeGroup = age_labels,
+  MeanPercentage = as.numeric(mean_values)
+)
+
+# Sleek, modern plot with 4 distinct colors
+ggplot(mean_df, aes(x = AgeGroup, y = MeanPercentage, fill = AgeGroup)) +
+  geom_col(width = 0.55, color = "#333333", linewidth = 0.3) +
+  scale_fill_manual(values = c("#8dd3c7", "#80b1d3", "#b3de69", "#a6cee3")) +  # 4 custom colors
+  geom_text(aes(label = round(MeanPercentage, 1)), 
+            vjust = -0.5, size = 4.2, color = "#444444") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +  # Adds 10% space at top
+  labs(title = "Mean Cost-Burdened Percentage of Renters by Age Group",
+       x = "Age Group",
+       y = "Mean Percentage") +
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+    axis.title = element_text(face = "bold"),
+    panel.grid.major.y = element_line(color = "#eeeeee"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "white", color = NA),
+    plot.background = element_rect(fill = "white", color = NA),
+    legend.position = "none"
+  )
+
+
+```
+
+\clearpage
+
+    To better understand the nature of the selected data, a correlation heatmap was created (Figure 10) using only the continuous features that will be included in the regression models. Most of the variables do not exhibit strong correlations with one another. However, there is a notably strong positive correlation of 0.81 between Pct_Bachelors_Higher and MedHouseIncome. This relationship is expected, as it is well documented that individuals with a bachelor’s degree or higher tend to have higher incomes on average.
+
+![Correlation Heatmap](corrplot.png){width="80%"}
+
+    The initial analysis of the census datum reveal that rising housing
+cost burden in Georgia may come as a result of a complex, multivariate
+interaction of variables such as income, race, geography, age, etc.
+While less populated areas face housing cost challenges due to low
+incomes, it is evident that highly populated areas are also becoming
+increasingly impacted by housing costs. Minorities, mainly Black and
+Hispanic households, are disproportionately affected by housing cost
+burden, indicating potential systemic inequities. Younger and older
+renters/homeowners are also vulnerable to these challenges, suggesting
+that focused intervention may be necessary to tackle the growing issue
+of housing affordability. The package gridExtra [@gridExtra] was used
+for arranging multiple plots on a single panel.
+
+\newpage
+
+## Methods
+
+    To answer the questions posed by clients, several tools were
+utilized to better understand the relationships between economic,
+geographic, and demographic predictor variables in the context of
+predicting cost-burden percentage for both owner-occupied households and
+renter-occupied households. The analysis was conducted at the county
+level for the state of Georgia, meaning each observation in the dataset
+represented a specific county, allowing for the assessment of regional
+trends and differences.
+
+### Multiple Linear Regression
+
+    The analysis began with the application of a multiple linear
+regression model to predict the cost-burden percentage for
+owner-occupied households. The model equation is:
+
+\begin{equation}
+\begin{split}
+\text{Pct\_CostBurdened\_Owners}_i &= \beta_0 + \beta_1 \cdot \text{isUrban}_i + \beta_2 \cdot \text{MedHouseIncome}_i \\
+&\quad + \beta_3 \cdot \text{Pct\_Bachelors\_Higher}_i + \beta_4 \cdot \text{Unemployment\_Rate}_i + \epsilon_i
+\end{split}
+\end{equation}
+
+where *Pct_CostBurdened_Owners* is the dependent variable and *isUrban*,
+*MedHouseIncome*, *Pct_Bachelors_Higher*, and *Unemployment_Rate* are
+the predictor variables defined in Table 1.
+
+    To address potential heterodescasticity present within the model,
+the Breusch-Pagan test conducted as a diagnostic check. Upon detecting
+evidence of heterodescasticity, a log-transformation on the dependent
+variable was used to stabalize the variance in the residuals.
+Additionally, cross-fold valuation was employed to compare performance
+between the original multiple linear regression model and the
+log-transformed model. Root means squared error and prediction accuaracy
+were metrics used to evaluate performance for model selection. The
+log-transformed model equation is:
+
+\begin{equation}
+\begin{split}
+\log(\text{Pct\_CostBurdened\_Owners}_i) &= \beta_0 + \beta_1 \cdot \text{isUrban}_i + \beta_2 \cdot \text{MedHouseIncome}_i \\
+&\quad + \beta_3 \cdot \text{Pct\_Bachelors\_Higher}_i + \beta_4 \cdot \text{Unemployment\_Rate}_i + \epsilon_i
+\end{split}
+\end{equation}
+
+where *log(Pct_CostBurdened_Owners)* is the dependent variable and
+*isUrban*, *MedHouseIncome*, *Pct_Bachelors_Higher*, and
+*Unemployment_Rate* are the predictor variables defined in Table 1.
+
+    Once the conditions were met --- including checking for assumptions
+for model-fitting (such as linearity, independence, normality of
+residuals, and constant variance within residuals) --- backward
+selection utilizing AIC criterion was used to assess variable selection.
+After deciding on a final model, the significance of each predictor on
+the dependent variable was evaluated using p-values at a 5% level of
+significance. Additionally, multicollinearity was checked using Variance
+Inflation Factors (VIF). The effects, whether positive or negative, as
+well as the extent to which the owner-occupied cost-burden percentage
+was affected, were analyzed in terms of the coefficient values of the
+predictors. Model performance was measured using R-squared and adjusted
+R-squared values, and possible interaction effects between predictor
+variables were tested to determine any combined influences on cost
+burden.
+
+    The second model applied was a multiple linear regression model
+analyzing the effects of the previously mentioned predictors on the
+cost-burden percentage for renter-occupied households. After fitting the
+model, conditions were checked similarly to the previous analysis. The
+model failed the constant variance condition, due to the presence of a
+statistically significant p-value at a 5% level of significance using
+the Breusch-Pagan test. To attempt to fix the problem of
+heteroscedasticity present within the model, an outlier point was
+removed from the data set and the model was refitted. This did not fix
+the problem of heteroscedasticity, due to the presence of a more
+statistically significant p-value using the Breusch-Pagan test. The
+renter cost-burden model equation is:
+
+\begin{equation}
+\begin{split}
+\text{Pct\_CostBurdened\_Renters}_i &= \beta_0 + \beta_1 \cdot \text{isUrban}_i + \beta_2 \cdot \text{MedHouseIncome}_i \\
+&\quad + \beta_3 \cdot \text{Pct\_Bachelors\_Higher}_i + \beta_4 \cdot \text{Unemployment\_Rate}_i + \epsilon_i
+\end{split}
+\end{equation}
+
+where *Pct_CostBurdened_Renters* is the dependent variable and
+*isUrban*, *MedHouseIncome*, *Pct_Bachelors_Higher*, and
+*Unemployment_Rate* are the predictor variables defined in Table 1.
+
+     A log-transformation was applied to the original multiple linear
+regression model, without removing the outlier point. The
+log-transformed model failed the Breusch-Pagan test due to a
+statistically significant p-value at a 5% level of significance,
+indicating heteroscedasticity. Additionally, the normality condition was
+violated, as evidenced by skewness in the histogram of residuals and the
+failure of the Shapiro-Wilk test, where the p-value was below a 5% level
+of significance, indicating a rejection of the null hypothesis of
+normality. An attempt was made at refitting the log-transformed model by
+removing the outlier point, but it still resulted in the same conclusion
+and did not improve on checking regression assumptions. The
+log-transformed renter cost-burden model equation is:
+
+\begin{equation}
+\begin{split}
+\log(\text{Pct\_CostBurdened\_Renters}_i) &= \beta_0 + \beta_1 \cdot \text{isUrban}_i + \beta_2 \cdot \text{MedHouseIncome}_i \\
+&\quad + \beta_3 \cdot \text{Pct\_Bachelors\_Higher}_i + \beta_4 \cdot \text{Unemployment\_Rate}_i + \epsilon_i
+\end{split}
+\end{equation}
+
+where *log(Pct_CostBurdened_Renters)* is the dependent variable and
+*isUrban*, *MedHouseIncome*, *Pct_Bachelors_Higher*, and
+*Unemployment_Rate* are the predictor variables defined in Table 1.
+
+### Weighted Least Squares Regression
+
+    To address this problem, an ordinary least squares model was deemed
+inappropriate due to the potential for biased and inaccurate coefficient
+estimates. Instead, a weighted least squares regression model was
+applied, which adjusts for heteroscedasticity by assigning different
+weights to different observations based on a chosen factor. The
+*isUrban* variable was selected as the weighting factor, as going from a
+rural county to a urban county significantly increased cost-burden for
+renter-occupied households. This approach also had a significant impact
+on the coefficients for the other factors in the model. The application
+of this method stabilized the heteroscedasticity in the residuals, and
+the model met all necessary regression assumptions. The weighted least
+squares model equations are:
+
+\begin{equation}
+\begin{aligned}
+\text{Pct\_CostBurdened\_Renters}_i &= \beta_0 + \beta_1 \cdot \text{isUrban}_i 
++ \beta_2 \cdot \text{MedHouseIncome}_i \\
+&\quad + \beta_3 \cdot \text{Pct\_Bachelors\_Higher}_i 
++ \beta_4 \cdot \text{Unemployment\_Rate}_i + \epsilon_i
+\end{aligned}
+\end{equation} \begin{equation}
+\text{Var}(\epsilon_i) = \sigma^2_{j}, \quad \text{for} \quad j \in \{\text{Urban}, \text{Non-Urban}\}
+\end{equation}
+
+\noindent \textbf{where:}
+
+\begin{itemize}
+    \item \textit{isUrban}, \textit{MedHouseIncome}, \textit{Pct\_Bachelors\_Higher}, and \textit{Unemployment\_Rate} are defined in Table 1.
+    \item $\sigma^2_j$ represents the distinct error variance for urban and non-urban counties.
+\end{itemize}
+
+    After ensuring conditions were met, backward selection was used
+incorporating BIC criterion for variable selection. Then, after getting
+a final model, the significance of each predictor variable on the
+cost-burden percentage for renter-occupied households was evaluated
+using p-values and confidence intervals. Multicollinearity was checked
+using Variance Inflation Factors (VIF) to ensure that variables were not
+correlated. Model fit was assessed using R-squared and adjusted
+R-squared values. Additionally, possible interaction effects between
+predictor variables were tested to determine any combined influences on
+cost burden.
+
+    At the request of the client, separate models were analyzed for
+predicting cost-burden percentages for renter-occupied and
+owner-occupied households at the county level. This approach was taken
+to capture the distinct effects of various factors, as these effects can
+differ significantly between renters and owners.
+
+### Analysis of Variance (ANOVA)
+
+    Before conducting statistical analyses, the assumptions underlying
+analysis of variance (ANOVA) were carefully examined to ensure the
+validity of the results. Specifically, we assessed the assumptions of
+normality, independence, and homogeneity of variance. Normality within
+groups was evaluated using diagnostic plots and the Shapiro-Wilks test,
+which indicated that the distribution of cost-burdened housing
+percentages did not significantly deviate from normality. However,
+Levene's test for homogeneity of variance revealed violations of the
+equal variance assumption across groups.
+
+    Given that normality was reasonably satisfied but homogeneity of
+variance was not, we selected Welch's ANOVA as the appropriate
+statistical test. Unlike the standard one-way ANOVA, Welch's ANOVA is
+robust to unequal variances while still assuming normality, making it a
+suitable alternative under these conditions.
+
+    For the demographic analysis, four separate one-way Welch's ANOVAs
+were conducted to compare differences in cost-burdened housing
+percentages across age and race groups, for both owner-occupied and
+renter-occupied housing. Age groups were categorized as 15--24, 25--34,
+35--64, and 65+. For race, categories included White, Black, and Other.
+
+\newpage
+
+## Results
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+# Load the data
+census_data = read.csv("DATA/ga_housing_data.csv")
+```
+
+### Multiple Linear Regression
+
+    The resulting model uses a linear model to predict the log of cost
+burden of owner-occupied housing using median household income and
+percent of population with a bachelor's degree as predictors. The model
+was found to be statistically significant with a p-value of
+approximately 0.0001. The equation is as follows:
+
+\begin{equation}
+\log(\text{Pct\_CostBurdened\_Owners}) = 3.167 - 0.000006972 \cdot \text{MedHouseIncome} + 0.009859 \cdot \text{Pct\_Bachelors\_Higher}
+\end{equation}
+
+For every \$1,000 increase in median household income, there's a 0.7%
+decrease in cost-burdenedness for owner-occupied households. For every
+1% increase in people with a bachelor's degree or higher, there's a
+0.9908% increase in cost-burden for owner-occupied households. These
+results suggest that higher median household income is associated with
+reduced housing cost burden, while a higher percentage of individuals
+with a bachelor's degree or higher is associated with increased housing
+cost burden among owner-occupied households.
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+
+census_data$Log_Pct_CostBurdened_Owners <- log(census_data$Pct_CostBurdened_Owners)
+final_log_model = lm(Log_Pct_CostBurdened_Owners ~ MedHouseIncome + Pct_Bachelors_Higher,
+                     data = census_data)
+summary <- summary(final_log_model)
+# Extract coefficients table
+coefficients_df <- as.data.frame(summary$coefficients) %>% 
+  mutate(`Pr(>|t|)` = ifelse(`Pr(>|t|)` < 0.001, "<0.001", `Pr(>|t|)`))
+
+# Extract other model statistics
+model_stats <- data.frame(
+  Statistic = c("R-squared", "Adj. R-squared", "F-statistic", "p-value"),
+  Value = c(summary$r.squared, summary$adj.r.squared, 
+           summary$fstatistic[1], pf(summary$fstatistic[1], 
+                                    summary$fstatistic[2], 
+                                    summary$fstatistic[3], 
+                                    lower.tail = FALSE))
+) %>% 
+  mutate(Value = ifelse(Value < 0.001, "<0.001", Value))
+```
+
+
+
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+stargazer(coefficients_df,
+          type = "latex",
+          summary = F,
+          title = "Coefficients for Final Log Model for Owner Occupied Cost Burden")
+stargazer(model_stats,
+          type = "latex",
+          summary = F,
+          title = "Summary Statistics for Final Log Model for Owner Occupied Cost Burden")
+```
+
+\begin{table}[!htbp] \centering 
+  \caption{Coefficients for Final Log Model for Owner Occupied Cost Burden} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}} ccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & Estimate & Std. Error & t value & Pr(\textgreater \textbar t\textbar ) \\ 
+\hline \\[-1.8ex] 
+(Intercept) & $3.167$ & $0.063$ & $50.427$ & $0$ \\ 
+MedHouseIncome & $$-$0.00001$ & $0.00000$ & $$-$4.363$ & $<0.001$ \\ 
+Pct\_Bachelors\_Higher & $0.010$ & $0.003$ & $3.537$ & $0.001$ \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table}
+\begin{table}[!htbp] \centering 
+  \caption{Summary Statistics for Final Log Model for Owner Occupied Cost Burden} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}} ccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & Statistic & Value \\ 
+\hline \\[-1.8ex] 
+1 & R-squared & $0.109$ \\ 
+2 & Adj. R-squared & $0.097$ \\ 
+3 & F-statistic & $9.517$ \\ 
+4 & p-value & $<0.001$ \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table}
+
+\newpage
+
+### Weighted Least Squares Regression
+
+    A similar multiple linear regression model was fit to predict the
+percentage of renter-occupied cost-burdened households based on the same
+predictors as the owner-occupied model. However, after examining the
+residuals through a Breusch-Pagan test, there is evidence of
+heteroscedasticity, BP = 11.52, p = 0.021.
+
+\begin{table}[!htbp] \centering 
+  \caption{Breusch-Pagan Test Results} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}} ccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & Method & Statistic & df & p.value \\ 
+\hline \\[-1.8ex] 
+BP & studentized Breusch-Pagan test & $11.519$ & $4$ & $0.021$ \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table}
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+# MLR Renter-occupied Cost Burden Model
+
+mlr_renters = lm(Pct_CostBurdened_Renters ~ isUrban + MedHouseIncome + Pct_Bachelors_Higher + Unemployment_Rate, data=census_data)
+bp_mlr <- bptest(mlr_renters)
+
+bp_mlr_results <- data.frame(
+  Method    = bp_mlr$method,
+  Statistic = round(bp_mlr$statistic, 3),
+  df        = bp_mlr$parameter,
+  p.value   = round(bp_mlr$p.value, 4)
+)
+
+
+stargazer(bp_mlr_results, 
+          type    = "latex",    
+          summary = FALSE,
+          title   = "Breusch-Pagan Test Results")
+```
+
+
+
+
+    Several transformations, such as removing residual outliers and log
+transforming the data, were performed to address challenges with
+non-constant variance in the residuals, but strong evidence of
+heteroscedasticity remained. Thus, a weighted least squares (WLS) model
+was deployed instead. It was hypothesized that variability of percent
+renter-occupied cost-burdened households may differ across urban and
+rural counties, which is reflected by the chosen weighting function.
+(Several different weighting options were tested, and weighting based on
+urban or rural county provided the most reliable performance, while
+meeting all underlying assumptions). It should also be noted that the
+unemployment rate predictor was removed to reduce multicollinearity and
+achieve a better BIC (decreased from 1151.61 to 1148.88). Cross
+validation and backward selection were employed to produce the final
+model.
+
+\begin{equation}
+\begin{split}
+\text{Pct\_CostBurdened\_Renters} &= 28.705 + 9.429 \cdot \text{isUrban} \\
+                                  &\quad - 0.00015 \cdot \text{MedHouseIncome} \\
+                                  &\quad + 0.351 \cdot \text{Pct\_Bachelors\_Higher}
+\end{split}
+\end{equation}
+
+where:
+
+\begin{equation}
+  Var(\epsilon_i) = 
+  \begin{cases}
+    \sigma^2 & \text{if } isUrban_i = 0 \\
+    \theta^2\sigma^2 & \text{if } isUrban_i = 1
+  \end{cases}
+\end{equation}
+
+\clearpage
+
+Thus, the model minimizes the expression:
+
+\begin{equation}
+\begin{split}
+\sum_{i=1}^n \left(\frac{1}{\operatorname{Var}(\epsilon_i)}\right) \Biggl(y_i - \biggl[ 
+&\beta_0 + \beta_1 \cdot \text{isUrban}_i \\
+&\quad + \beta_2 \cdot \text{MedHouseIncome}_i \\
+&\quad + \beta_3 \cdot \text{Pct\_Bachelors\_Higher}_i \biggr] \Biggr)^2
+\end{split}
+\end{equation}
+
+where:
+
+\begin{equation}
+  w_i = 
+  \begin{cases}
+    \frac{1}{\sigma^2} & \text{if } isUrban_i = 0 \\
+    \frac{1}{\theta^2\sigma^2} & \text{if } isUrban_i = 1
+  \end{cases}
+\end{equation}
+
+This weighting criterion ensures that the isUrban factor level with
+larger residual variance gets less weight in the estimation.
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+
+# WLS Renter-occupied Cost Burden
+wls_renters <- gls(Pct_CostBurdened_Renters ~ isUrban + MedHouseIncome + Pct_Bachelors_Higher, 
+                 data = census_data, 
+                 weights = varIdent(form = ~ 1 | isUrban))
+
+summary(wls_renters)
+summary(wls_renters)$tTable
+```
+
+
+
+
+
+
+    Specifically, weighting by urban or rural counties allows the model
+to fix a baseline standard deviation of 1.00 for rural counties, while
+the standard deviation for urban areas was assigned to 0.65. This
+effectively handles heteroscedasticity by reducing residual variation
+within urban counties, in comparison with rural counties. Examining the
+residuals for the WLS model with a Breusch-Pagan test, the
+heteroscedasticity was properly handled, BP = 0.10235, p-value = 0.797.
+
+\begin{table}[!htbp] \centering 
+  \caption{Breusch-Pagan Test Results} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}} ccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & Method & Statistic & df & p.value \\ 
+\hline \\[-1.8ex] 
+BP & studentized Breusch-Pagan test & $0.066$ & $1$ & $0.797$ \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table}
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+wls_resid_squared <- residuals(wls_renters, type = "pearson")^2
+wls_fitted_values <- fitted(wls_renters)
+
+# Fit auxiliary regression
+wls_aux <- lm(wls_resid_squared ~ wls_fitted_values, data = census_data)
+
+# Perform Breusch-Pagan test
+wls_bp <- bptest(wls_aux)
+
+bp_results <- data.frame(
+  Method    = wls_bp$method,
+  Statistic = round(wls_bp$statistic, 3),
+  df        = wls_bp$parameter,
+  p.value   = round(wls_bp$p.value, 4)
+)
+
+# Use stargazer to display the data frame
+stargazer(bp_results, 
+          type    = "latex",    # use "latex" or "html" for different output
+          summary = FALSE,
+          title   = "Breusch-Pagan Test Results")
+```
+
+    Table 3 shows the coefficients, standard errors, t-values, and
+p-values for the final WLS model. All of the predictors are
+statistically significant. As a result, the null hypothesis (there is no
+correlation between individual predictors and the percentage of
+renter-occupied cost-burdened households) can be rejected. Additionally,
+when median household income and education level are held constant,
+urban counties display a 9.43% increase in renter-occupied housing cost
+burden, relative to rural counties. This supports the original
+hypothesis that urban counties are associated with greater percentages
+of renter-occupied cost-burdened households. Furthermore, every \$1000
+increase in median household income correlates with a 0.153% decrease in
+renter-occupied housing cost burden, when all other variables are held
+constant. In practical terms, greater median incomes are linked with a
+slightly lower percentage of renter-occupied cost-burdened households.
+Another notable finding is that every 1% increase in the population
+holding bachelor's degrees correlates with a 0.35% increase in
+renter-occupied housing cost burden. This finding provides support
+against a logical hypothesis that greater percentages of formal higher
+education in a population correlates with a lower percentage of
+households being labeled as cost-burdened.
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+gls_sum <- summary(wls_renters)$tTable
+# Row names should be:
+#   "(Intercept)", "isUrban", "MedHouseIncome", "percent_bachelors_higher"
+
+# 2) Reorder rows so that they match the order you want:
+desired_order <- c("(Intercept)",
+                   "isUrban",
+                   "MedHouseIncome",
+                   "Pct_Bachelors_Higher")
+
+gls_sum <- gls_sum[desired_order, ]
+
+# 3) Pull out each column in that order
+coefs <- gls_sum[, "Value"]
+ses   <- gls_sum[, "Std.Error"]
+tvals <- gls_sum[, "t-value"]
+pvals <- gls_sum[, "p-value"]
+
+# 4) Feed these into stargazer
+stargazer(
+  wls_renters,
+  type = "latex",  # "text" or "html" if preferred
+  title = "Generalized Least Squares Model for Rent Burden",
+  
+  # Match these labels to the same order in 'desired_order':
+  covariate.labels = c(
+    "Urban (isUrban = 1)",
+    "Median Household Income",
+    "Percent with Bachelor's or Higher",
+    "(Intercept)"
+  ),
+  
+  # Manually supply the correct estimates/SEs/t‐stats/p‐values
+  coef = list(coefs),
+  se   = list(ses),
+  t    = list(tvals),
+  p    = list(pvals),
+  
+  # Instruct stargazer on how to display each statistic
+  report = "vcstp",  # v=coefficient, c=SE, t=t-value, p=p-value
+  digits = 3,        # number of decimal places
+  
+  # Add conventional significance stars
+  star.cutoffs = c(0.05, 0.01, 0.001),
+  
+  # Add a footnote if you like
+  notes = "GLS model weighted by varIdent(form = ~1 | isUrban)",
+  notes.append = FALSE
+)
+```
+
+\begin{table}[!htbp] \centering 
+  \caption{Weighted Least Squares Model for Rent Burden} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{1}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-2} 
+\\[-1.8ex] & Pct\_CostBurdened\_Renters \\ 
+\hline \\[-1.8ex] 
+ Urban (isUrban = 1) & 9.429 \\ 
+  & (1.479) \\ 
+  & t = 6.377 \\ 
+  & p = <0.001 \\ 
+  & \\ 
+ Median Household Income & $-$0.0002 \\ 
+  & (0.0001) \\ 
+  & t = $-$2.971 \\ 
+  & p = <0.001 \\ 
+  & \\ 
+ Percent with Bachelor's or Higher & 0.351 \\ 
+  & (0.094) \\ 
+  & t = 3.741 \\ 
+  & p = <0.001 \\ 
+  & \\ 
+ (Intercept) & 38.134 \\ 
+  & (2.235) \\ 
+  & t = 17.066 \\ 
+  & p = <0.001 \\ 
+  & \\ 
+\hline \\[-1.8ex] 
+Observations & 159 \\ 
+Log Likelihood & $-$559.308 \\ 
+Akaike Inf. Crit. & 1,130.616 \\ 
+Bayesian Inf. Crit. & 1,148.877 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{1}{r}{GLS model weighted by varIdent(form = ~1 | isUrban)} \\ 
+\end{tabular} 
+\end{table}
+
+\newpage
+
+### Welch's ANOVA Results
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE,results = 'hide'}
+# Read the data
+cviogData = read.csv("DATA/ga_housing_data.csv")
+cviogData <- cviogData %>%
+  mutate(GEOID = as.character(GEOID))
+```
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE,results = 'hide'}
+
+cviogDataAgeOwners <- cviogData %>%
+  select(GEOID, Pct_CostBurdened_15_24, Pct_CostBurdened_25_34, 
+         Pct_CostBurdened_35_64, Pct_CostBurdened_65_plus) %>%
+  pivot_longer(cols = c("Pct_CostBurdened_15_24", 
+                        "Pct_CostBurdened_25_34", 
+                        "Pct_CostBurdened_35_64", 
+                        "Pct_CostBurdened_65_plus"),
+               names_to = "Age_Group", 
+               values_to = "Pct_CostBurdened") %>%
+  mutate(Age_Group = factor(Age_Group, 
+                            levels = c("Pct_CostBurdened_15_24", 
+                                       "Pct_CostBurdened_25_34",
+                                       "Pct_CostBurdened_35_64", 
+                                       "Pct_CostBurdened_65_plus"),
+                            labels = c("15-24", "25-34", "35-64", "65+")))
+
+mean_percentages <- cviogDataAgeOwners %>%
+  group_by(Age_Group) %>%
+  summarize(Mean_Pct_CostBurdened = mean(Pct_CostBurdened, na.rm = TRUE))
+```
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE,results = 'hide'}
+cviogDataAgeRenters <- cviogData %>%
+  select(GEOID, Pct_RenterCostBurdened_15_24, Pct_RenterCostBurdened_25_34, 
+         Pct_RenterCostBurdened_35_64, Pct_RenterCostBurdened_65_plus) %>%
+  pivot_longer(cols = c("Pct_RenterCostBurdened_15_24", 
+                        "Pct_RenterCostBurdened_25_34", 
+                        "Pct_RenterCostBurdened_35_64", 
+                        "Pct_RenterCostBurdened_65_plus"),
+               names_to = "Age_Group", 
+               values_to = "Pct_RenterCostBurdened") %>%
+  mutate(Age_Group = factor(Age_Group, 
+                            levels = c("Pct_RenterCostBurdened_15_24", 
+                                       "Pct_RenterCostBurdened_25_34",
+                                       "Pct_RenterCostBurdened_35_64", 
+                                       "Pct_RenterCostBurdened_65_plus"),
+                            labels = c("15-24", "25-34", "35-64", "65+")))
+
+mean_renter_percentages <- cviogDataAgeRenters %>%
+  group_by(Age_Group) %>%
+  summarize(Mean_Pct_RenterCostBurdened = mean(Pct_RenterCostBurdened, na.rm = TRUE))
+```
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE,results = 'hide'}
+
+cviogDataRaceOwners <- cviogData %>%
+  select(GEOID, Pct_CostBurdened_White_Owners, 
+         Pct_CostBurdened_Black_Owners, 
+         Pct_CostBurdened_Other_Owners 
+          
+         ) %>%
+  pivot_longer(cols = c("Pct_CostBurdened_White_Owners", 
+                        "Pct_CostBurdened_Black_Owners", 
+                        "Pct_CostBurdened_Other_Owners"),
+               names_to = "Race_Group", 
+               values_to = "Pct_CostBurdened") %>%
+  mutate(Race_Group = factor(Race_Group, 
+                             levels = c("Pct_CostBurdened_White_Owners", 
+                                        "Pct_CostBurdened_Black_Owners", 
+                                        "Pct_CostBurdened_Other_Owners"),
+                             labels = c("White", "Black", "Other")))
+
+
+mean_race_owner_percentages <- cviogDataRaceOwners %>%
+  group_by(Race_Group) %>%
+  summarize(Mean_Pct_CostBurdened = mean(Pct_CostBurdened, na.rm = TRUE))
+```
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE,results = 'hide'}
+
+cviogDataRaceRenters <- cviogData %>%
+  select(GEOID, Pct_CostBurdened_White_Renters, 
+         Pct_CostBurdened_Black_Renters, 
+         Pct_CostBurdened_Other_Renters 
+         
+         ) %>%
+  pivot_longer(cols = c("Pct_CostBurdened_White_Renters", 
+                        "Pct_CostBurdened_Black_Renters", 
+                        "Pct_CostBurdened_Other_Renters"),
+               names_to = "Race_Group", 
+               values_to = "Pct_CostBurdened") %>%
+  mutate(Race_Group = factor(Race_Group, 
+                             levels = c("Pct_CostBurdened_White_Renters", 
+                                        "Pct_CostBurdened_Black_Renters", 
+                                        "Pct_CostBurdened_Other_Renters"),
+                             labels = c("White", "Black", "Other")))
+
+mean_race_renter_percentages <- cviogDataRaceRenters %>%
+  group_by(Race_Group) %>%
+  summarize(Mean_Pct_CostBurdened = mean(Pct_CostBurdened, na.rm = TRUE))
+```
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE,results = 'hide'}
+oneway.test(Pct_CostBurdened ~ Age_Group, data = cviogDataAgeOwners, var.equal = FALSE)
+
+gamesHowellTest(Pct_CostBurdened ~ Age_Group, data = cviogDataAgeOwners)
+```
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE,results = 'hide'}
+oneway.test(Pct_RenterCostBurdened ~ Age_Group, data = cviogDataAgeRenters, var.equal = FALSE)
+
+gamesHowellTest(Pct_RenterCostBurdened ~ Age_Group, data = cviogDataAgeRenters)
+```
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE,results = 'hide'}
+oneway.test(Pct_CostBurdened ~ Race_Group, data = cviogDataRaceOwners, var.equal = FALSE)
+
+gamesHowellTest(Pct_CostBurdened ~ Race_Group, data = cviogDataRaceOwners)
+```
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE,results = 'hide'}
+oneway.test(Pct_CostBurdened ~ Race_Group, data = cviogDataRaceRenters, var.equal = FALSE)
+
+gamesHowellTest(Pct_CostBurdened ~ Race_Group, data = cviogDataRaceRenters)
+```
+
+    A Welch’s one-way ANOVA was conducted to examine mean differences in
+the percentage of cost-burdened housing across age groups (15–24, 25–34,
+35–64, and 65+) for both owner-occupied and renter-occupied housing. The
+analysis was performed at a significance level of $\alpha$= 0.05.
+
+    For owner-occupied housing, this analysis revealed a statistically
+significant effect of age group on the percentage of cost-burdened
+housing, F = 23.43, p \< .0001. This shows that the mean percentage of
+cost-burdened housing differs meaningfully between at least one of the
+age groups, based on statistically significant evidence. Pairwise
+comparisons using the Games-Howell test indicated that the percentage of
+cost-burdened housing for the age groups 15-24 differed significantly
+with the age groups 25-34 and 35-64 with p-values of .00504 and .00027
+respectively. Age group 65+ also differed significantly with age groups
+25-34 and 35-64 with p-values of .00367 and \<.001 respectively. Age
+groups 25-34 and 35-64 did not differ significantly with a p-value of
+.43913. Age groups 15-24 and 65+ did differ significantly with a p value
+.00504. Due to age groups 15-24 and 65+ having higher means than age
+groups 25-34 and 35-64 indicates that ages 15-24 and 65+ are more like
+to experience cost-burden and since age 15-24 has the highest mean its
+the most likely to experience it.
+
+    For renter-occupied housing, Welch's ANOVA also revealed a
+significant effect of age group on the percentage of cost-burdened
+housing, F = 7.51, p \< 0.001. This indicates that the mean percentage
+of cost-burdened housing differs significantly between at least one of
+the age groups. Pairwise comparisons using the Games-Howell test
+indicated that the percentage of cost-burdened housing for age group 65+
+differed significantly with the age groups 15-24, 25-34, and 35-64 with
+p values .0431, .0021, and \< 0.001 respectively. No significant
+differences were observed between other age groups. This suggests that
+the 65+ renters are more likely to experience cost-burdened housing
+compared to younger renters as they had a higher mean (see Tables 7, and
+8,9,10 for details).
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+# Welch's ANOVA output
+WelchAgeOwners <- oneway.test(Pct_CostBurdened ~ Age_Group, data = cviogDataAgeOwners, var.equal = FALSE)
+
+# Manually create a data frame for the results
+anova_results1 <- data.frame(
+  Source = c("Between Groups", "Residuals"),
+  DF = c(3, 330.16),  # Degrees of freedom (num df and denom df)
+  F_value = c(23.429, NA),  # F-statistic (only for Between Groups)
+  p_value = c("8.985e-14", NA)  # p-value
+)
+
+# Replace NA with blank for Residuals
+anova_results1[is.na(anova_results1)] <- ""
+
+# Use stargazer to display the table
+stargazer(anova_results1, 
+          type = "latex",    # Output in standard text format
+          summary = FALSE,   # Disable summary as we already have the custom data frame
+          title = "Table 4: Welch's ANOVA Results for Cost Burden by Age Group (Owners)",  # Descriptive title
+          digits = 4,        # Control decimal places
+          no.space = TRUE,   # Remove extra space between rows
+          column.sep.width = "0pt",  # Remove space between columns
+          header = TRUE)     # Show the column headers
+
+# Create the results data frame
+results_df <- data.frame(
+  Comparison = c("15-24 vs 25-34", "15-24 vs 35-64", "15-24 vs 65+", 
+                 "25-34 vs 35-64", "25-34 vs 65+", "35-64 vs 65+"),
+  P_Value = c(0.00504, 0.00027, 0.17481, 0.43913, 0.00367, 2.2e-12)
+)
+
+# Store the stargazer output in a variable with the name "Games Howell Test Results for Age Groups (Owners)"
+output_table <- capture.output(
+  stargazer(results_df, type = "latex", summary = FALSE, rownames = FALSE, 
+            title = "Table 5: Games Howell Test Results for Age Groups (Owners)")
+)
+
+# Print the output table
+cat(output_table, sep = "\n")
+```
+
+\begin{table}[!htbp] \centering 
+  \caption{Welch's ANOVA Results for Cost Burden by Age Group (Owners)} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{0pt}} ccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & Source & DF & F\_value & p\_value \\ 
+\hline \\[-1.8ex] 
+1 & Between Groups & $3$ & 23.429 & <0.001 \\ 
+2 & Residuals & $330.1600$ &  &  \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table}
+\begin{table}[!htbp] \centering 
+  \caption{Games Howell Test Results for Age Groups (Owners)} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}} cc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+Comparison & P\_Value \\ 
+\hline \\[-1.8ex] 
+15-24 vs 25-34 & $0.005$ \\ 
+15-24 vs 35-64 & $<0.001$ \\ 
+15-24 vs 65+ & $0.175$ \\ 
+25-34 vs 35-64 & $0.439$ \\ 
+25-34 vs 65+ & $0.004$ \\ 
+35-64 vs 65+ & $<0.001$ \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table}
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+WelchAgeRenters <- oneway.test(Pct_RenterCostBurdened ~ Age_Group, data = cviogDataAgeRenters, var.equal = FALSE)
+
+# Manually create a data frame for the results
+anova_results2 <- data.frame(
+  Source = c("Between Groups", "Residuals"),
+  DF = c(3, 340.14),  # Degrees of freedom (num df and denom df)
+  F_value = c(7.5073, NA),  # F-statistic (only for Between Groups)
+  p_value = c("7.045e-05", NA)  # p-value
+)
+
+# Replace NA with blank for Residuals
+anova_results2[is.na(anova_results2)] <- ""
+
+# Use stargazer to display the table
+stargazer(anova_results2, 
+          type = "latex",    # Output in standard text format
+          summary = FALSE,   # Disable summary as we already have the custom data frame
+          title = "Table 6: Welch's ANOVA Results for Cost Burden by Age Group (Renters)",  # Descriptive title
+          digits = 4,        # Control decimal places
+          no.space = TRUE,   # Remove extra space between rows
+          column.sep.width = "0pt",  # Remove space between columns
+          header = TRUE)     # Show the column headers
+
+
+# Create the results data frame for renters
+results_df_renters <- data.frame(
+  Comparison = c("15-24 vs 25-34", "15-24 vs 35-64", "15-24 vs 65+", 
+                 "25-34 vs 35-64", "25-34 vs 65+", "35-64 vs 65+"),
+  P_Value = c(0.9992, 0.9735, 0.0431, 0.9792, 0.0021, 3.9e-05)
+)
+
+# Display the table with the title "Games Howell Test Results for Age Groups (Renters)"
+stargazer(results_df_renters, type = "latex", summary = FALSE, rownames = FALSE, 
+          title = "Table 7: Games Howell Test Results for Age Groups (Renters)")
+
+```
+
+\begin{table}[!htbp] \centering 
+  \caption{Welch's ANOVA Results for Cost Burden by Age Group (Renters)} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{0pt}} ccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & Source & DF & F\_value & p\_value \\ 
+\hline \\[-1.8ex] 
+1 & Between Groups & $3$ & 7.5073 & <0.001 \\ 
+2 & Residuals & $340.1400$ &  &  \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table}
+\begin{table}[!htbp] \centering 
+  \caption{Games Howell Test Results for Age Groups (Renters)} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}} cc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+Comparison & P\_Value \\ 
+\hline \\[-1.8ex] 
+15-24 vs 25-34 & $0.999$ \\ 
+15-24 vs 35-64 & $0.974$ \\ 
+15-24 vs 65+ & $0.043$ \\ 
+25-34 vs 35-64 & $0.979$ \\ 
+25-34 vs 65+ & $0.002$ \\ 
+35-64 vs 65+ & $<0.001$ \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table}
+
+\clearpage
+
+    Welch's ANOVA was also performed to examine differences in the
+percentage of cost-burdened housing across race groups for both
+owner-occupied and renter-occupied housing. As with the age groups,
+Welch's ANOVA was used due to violations of the assumption of equal
+variances. The analysis was conducted at a significance level of
+$\alpha$ = 0.05.
+
+    For owner-occupied housing, the analysis indicated a significant
+effect of race group on the percentage of cost-burdened housing, F =
+31.20, p \< .001. This suggests that the mean percentage of
+cost-burdened housing differs significantly across race groups. Pairwise
+comparisons using the Games-Howell test showed that the Black group
+differed significantly from the White group with a p-value \<.0001 and
+did not differ significantly from the Other group with a p-value of
+.365. Additionally, the White group was found to differ significantly
+from the Other group with a p value of .031. Also, the Black group had
+the highest mean followed by the Other group which indicates that Black
+owners and Other owners are more likely to experience cost-burden than
+White owners.
+
+    For renter-occupied housing, Welch's ANOVA also showed a significant
+effect of race group on the percentage of cost-burdened housing, F =
+18.08, p \< .001. This suggests that the mean percentage of
+cost-burdened housing differs significantly across race groups for
+renters. Pairwise comparisons using the Games-Howell test indicated that
+the Black group differed significantly from the White and Other groups
+with p-values \<.0001 and .0011 respectively. It also showed the White
+group did not differ significantly from the Other group with a p-value
+of .9832. These results indicate that Black renters are more likely to
+experience cost-burden than the White and Other groups as they have a
+higher mean (see Tables 11,12,13,14 for details)
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+WelchRaceOwners <- oneway.test(Pct_RenterCostBurdened ~ Age_Group, data = cviogDataAgeRenters, var.equal = FALSE)
+
+# Manually create a data frame for the results
+anova_results3 <- data.frame(
+  Source = c("Between Groups", "Residuals"),
+  DF = c(2, 235.17),  # Degrees of freedom (num df and denom df)
+  F_value = c(31.201, NA),  # F-statistic (only for Between Groups)
+  p_value = c("9.585e-13", NA)  # p-value
+)
+
+# Replace NA with blank for Residuals
+anova_results3[is.na(anova_results3)] <- ""
+
+# Use stargazer to display the table
+stargazer(anova_results3, 
+          type = "latex",    # Output in standard text format
+          summary = FALSE,   # Disable summary as we already have the custom data frame
+          title = "Table 8: Welch's ANOVA Results for Cost Burden by Race Group (Owners)",  # Descriptive title
+          digits = 4,        # Control decimal places
+          no.space = TRUE,   # Remove extra space between rows
+          column.sep.width = "0pt",  # Remove space between columns
+          header = TRUE)     # Show the column headers
+
+# Create the results data frame for race owners
+results_df_race_owners <- data.frame(
+  Comparison = c("White vs Black", "White vs Other", "Black vs Other"),
+  P_Value = c("3.8e-12", 0.031, 0.365)
+)
+
+# Display the table with the title "Games Howell Test Results for Race Groups (Owners)"
+stargazer(results_df_race_owners, type = "latex", summary = FALSE, rownames = FALSE, 
+          title = "Table 9: Games Howell Test Results for Race Groups (Owners)")
+
+```
+
+\begin{table}[!htbp] \centering 
+  \caption{Welch's ANOVA Results for Cost Burden by Race Group (Owners)} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{0pt}} ccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & Source & DF & F\_value & p\_value \\ 
+\hline \\[-1.8ex] 
+1 & Between Groups & $2$ & 31.201 & <0.001 \\ 
+2 & Residuals & $235.1700$ &  &  \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table}
+\begin{table}[!htbp] \centering 
+  \caption{Games Howell Test Results for Race Groups (Owners)} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}} cc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+Comparison & P\_Value \\ 
+\hline \\[-1.8ex] 
+White vs Black & <0.001 \\ 
+White vs Other & 0.031 \\ 
+Black vs Other & 0.365 \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table}
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+WelchRaceRenters <- oneway.test(Pct_CostBurdened ~ Race_Group, data = cviogDataRaceRenters, var.equal = FALSE)
+
+# Manually create a data frame for the results
+anova_results4 <- data.frame(
+  Source = c("Between Groups", "Residuals"),
+  DF = c(2, 267.91),  # Degrees of freedom (num df and denom df)
+  F_value = c(18.078, NA),  # F-statistic (only for Between Groups)
+  p_value = c("4.316e-08", NA)  # p-value
+)
+
+# Replace NA with blank for Residuals
+anova_results4[is.na(anova_results4)] <- ""
+
+# Use stargazer to display the table
+stargazer(anova_results4, 
+          type = "latex",    # Output in standard text format
+          summary = FALSE,   # Disable summary as we already have the custom data frame
+          title = "Table 10: Welch's ANOVA Results for Cost Burden by Race Group (Renters)",  # Descriptive title
+          digits = 4,        # Control decimal places
+          no.space = TRUE,   # Remove extra space between rows
+          column.sep.width = "0pt",  # Remove space between columns
+          header = TRUE)     # Show the column headers
+
+# Create the results data frame for race renters
+results_df_race_renters <- data.frame(
+  Comparison = c("White vs Black", "White vs Other", "Black vs Other"),
+  P_Value = c("3.1e-08", 0.9832, 0.0011)
+)
+
+# Display the table with the title "Games Howell Test Results for Race Groups (Renters)"
+stargazer(results_df_race_renters, type = "latex", summary = FALSE, rownames = FALSE, 
+          title = "Table 11: Games Howell Test Results for Race Groups (Renters)")
+
+```
+
+\begin{table}[!htbp] \centering 
+  \caption{Welch's ANOVA Results for Cost Burden by Race Group (Renters)} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{0pt}} ccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & Source & DF & F\_value & p\_value \\ 
+\hline \\[-1.8ex] 
+1 & Between Groups & $2$ & 18.078 & <0.001 \\ 
+2 & Residuals & $267.9100$ &  &  \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table}
+\begin{table}[!htbp] \centering 
+  \caption{Games Howell Test Results for Race Groups (Renters)} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}} cc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+Comparison & P\_Value \\ 
+\hline \\[-1.8ex] 
+White vs Black & <0.001 \\ 
+White vs Other & 0.9832 \\ 
+Black vs Other & 0.0011 \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table}
+
+\newpage
+
+## Conclusion
+
+This analysis of housing cost burden in Georgia revealed several
+meaningful insights into the geographical, economic, and demographic
+factors that influence cost burden for both owner-occupied and
+renter-occupied households. Remarkable findings include that urban
+counties exhibit a 9.43% increase in cost-burden for renter-occupied
+households as compared to rural counties. Median household income and
+education levels are also key drivers for influencing cost-burden for
+owner-occupied households: higher household income levels correlate with
+a slight reduction in cost-burden (0.0007%), while unexpectedly higher
+education levels correlate with a slight increase in cost-burden
+(0.9908%). Meanwhile, for renter-occupied households, higher education
+levels also correlate with a slight increase in cost-burden (0.351%).
+These findings suggest that while higher education may lead to higher
+paying jobs, rising housing costs in urban counties may be offesetting
+gains in earning potential.
+
+The analysis revealed that both age and race are significantly
+associated with differences in the mean percentage of cost-burdened
+housing for owner-occupied and renter-occupied households. For
+owner-occupied housing, younger adults (15–24) and older adults (65+)
+were significantly more likely to be cost-burdened compared to
+middle-aged groups (25–34) and (35-64), with the 15–24 age group showing
+the highest cost burden. Racial disparities were also present, with
+Black and Other homeowners experiencing higher cost burdens than White
+homeowners. For renter-occupied housing, adults aged 65+ were
+significantly more likely to be cost-burdened compared to all other age
+groups. Looking back into race, Black renters showed a significantly
+higher cost burden than both White and Other groups, highlighting a
+notable disparity.
+
+These methodological approaches, including both weighted least squares
+regression and Welch's ANOVA, effectively addressed challenges such as
+heterodescasticity and unequal variances, allowing for more robust
+results. These models suggest need for intervention from policy-makers,
+such as expanding affordable housing options for more cost-burdened
+individuals in urban areas, implementing rent stabilization measures,
+and addressing wage discrepancies. Further research could explore
+additional variables or ways to handle spatially correlated data, based
+on county level, to further refine these insights.
+
+In summary, this analysis provides practical evidence for policymakers
+to address housing insecurity in Georgia, emphasizing urgent need for
+equitable solutions specifically tailored to most affected demographics
+(i.e. urban renters, Black households, and vulnerable age groups). By
+addressing these disparities, Georgia can move toward a better housing
+future.
+
+\newpage
+
+## References
+
+::: {#refs}
+:::
+
+\newpage
+
+## Appendix
+
+The R code for this project is available on Google Drive:\
+[Click here to view the R script]
+(<https://drive.google.com/file/d/1XfGuoredDW2b447PLKGmWomd1ExPw4Op/view?usp=share_link>)
