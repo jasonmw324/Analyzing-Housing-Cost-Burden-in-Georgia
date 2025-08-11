@@ -241,6 +241,30 @@ the data to produce an estimate that reflects a typical year within the
 ## Exploratory Data Analysis (EDA)
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
+
+# Install packages if missing
+packages <- c(
+  "tidycensus",
+  "tidyverse",
+  "ggplot2",
+  "tigris",
+  "dplyr",
+  "sf",
+  "gridExtra",
+  "car",
+  "lmtest",
+  "heplots",
+  "nlme",
+  "stargazer",
+  "PMCMRplus"
+)
+
+# Uncomment the next line to automatically install any missing packages:
+
+# install.packages(setdiff(packages, rownames(installed.packages())))
+
+
+
 # Load Packages
 library(tidycensus)
 library(tidyverse)
