@@ -28,11 +28,9 @@ This project investigates housing cost burden in Georgia, defined as households 
 ---
 
 ## 🛠️ Skills & Tools Used
-- Programming: R  
-- Data Manipulation: tidyverse, dplyr  
-- Statistical Analysis: linear regression, t-tests, ANOVA  
-- Visualization: ggplot2, plotly  
-- Data Source: ACS 5-year survey (2015–2020)  
+- Programming: R
+- Libraries: tidyverse, dplyr, tidycensus 
+- Statistical Analysis: Multiple Linear regression, Welch's Anova, Weighted Least Squares
 
 ---
 
@@ -86,6 +84,7 @@ This project investigates housing cost burden in Georgia, defined as households 
 ```markdown
 ![Cost Burden by County](images/cost_burden_map.png)
 ![Rent-to-Income Distribution](images/rent_income_plot.png)
+
 
 
 
