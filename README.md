@@ -2,25 +2,6 @@
 
 This analysis examines the factors that contribute to the percentage of housing in Georgia that is considered cost-burdened, and explores relationships between income, household characteristics, and location.
 
----
-
-## 📚 Table of Contents
-1. [Overview](#overview)
-2. [Skills & Tools Used](#skills--tools-used)
-3. [Research Question](#research-question)
-4. [Data Source](#data-source)
-5. [Data Preparation](#data-preparation)
-6. [Methodology](#methodology)
-7. [Assumptions](#assumptions)
-8. [Results](#results)
-9. [Visualizations](#visualizations)
-10. [Project Structure](#project-structure)
-11. [Limitations](#limitations)
-12. [Future Work](#future-work)
-13. [License](#license)
-14. [Acknowledgements](#acknowledgements)
-
----
 
 ## 🧭 Overview
 This project investigates housing cost burden in Georgia, defined as households spending more than 30% of income on housing. The goal is to identify key demographic, economic, and geographic factors associated with cost-burdened households and provide insights for policymakers and housing researchers.
@@ -83,6 +64,7 @@ households.
   - Renters:Black renters experience significantly higher cost burden compared to White and Other groups. 
 
 ---
+
 
 
 
