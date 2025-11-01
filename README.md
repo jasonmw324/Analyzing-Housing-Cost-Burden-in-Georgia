@@ -30,20 +30,23 @@ This project investigates housing cost burden in Georgia, defined as households 
 ## 🛠️ Skills & Tools Used
 - Programming: R
 - Libraries: tidyverse, dplyr, tidycensus 
-- Statistical Analysis: Multiple Linear regression, Welch's Anova, Weighted Least Squares
+- Statistical Analysis: Multiple Linear Regression, Welch's Anova, Weighted Least Squares
 
 ---
 
 ## 🎯 Research Question
-- What factors contribute most to the prevalence of cost-burdened households in Georgia?  
-- How do income, household size, and geographic location relate to housing cost burden?  
+- What is the relationship between demographic, geographic, and
+economic features collected by the Census Bureau’s American
+Community Survey on the percentage of owner- and renter-occupied
+housing that is classified as cost-burdened (e.g., 30% of their income
+dedicated to housing costs)?  
+  
 
 ---
 
 ## 📊 Data Source
-- **Dataset name:** American Community Survey (ACS) 5-year estimates  
-- **Source/Link:** [ACS Data via Census API](https://www.census.gov/programs-surveys/acs)  
-- **Time period covered:** 2015–2020  
+- **Dataset name:** American Community Survey (ACS) 5-year estimates 2017-2021
+- **Source/Link:** [ACS Data via Census API](https://www.census.gov/programs-surveys/acs)   
 - **Number of observations / variables:** Varies by table; includes household income, rent, household size, and county-level identifiers  
 - **Any preprocessing notes:** Filtered for Georgia; calculated rent-to-income ratio; handled missing income and rent data  
 
@@ -59,31 +62,30 @@ This project investigates housing cost burden in Georgia, defined as households 
 ---
 
 ## ⚙️ Methodology
-- Performed descriptive statistics to understand distribution of cost-burdened households  
-- Used linear regression to model relationship between demographic variables and cost burden  
-- Conducted t-tests and ANOVA to explore differences across counties and income groups  
-- Visualized trends with ggplot2 and interactive plots using plotly  
+- Multiple Linear Regression
+- Weighted Least Squares
+- Welch's ANOVA   
 
 ---
 
-## 📏 Assumptions
-- ACS survey weights correctly reflect population estimates  
-- Linear regression assumptions: linearity, independence, normality of residuals, and homoscedasticity  
-- County-level aggregation does not mask significant sub-county variation  
+---
+
+## 📈 Results & Conclusions
+- Urban vs. Rural: Urban counties show a significantly higher percentage of renter-occupied cost-burdened households (+9.43%) compared to rural areas.
+- Income Effects: Increases in median household income are correlated with lower cost burden for renters—but the impact is modest.
+- Education Paradox: Counties with higher percentages of bachelor’s degrees unexpectedly see slightly higher rates of cost-burdened households for renter-occupied
+households.
+- Age disparities
+  - Owners: The youngest (15–24) and oldest (65+) homeowners face notably higher cost burdens than middle-aged groups.
+  - Renters: Older adults (65+) are significantly more likely to be cost-burdened compared to younger renters.
+- Racial Inequities
+  - Owners: Black and “Other” racial groups have higher owner cost-burden rates than White owners.
+  - Renters:Black renters experience significantly higher cost burden compared to White and Other groups. 
 
 ---
 
-## 📈 Results
-- Income and household size were the strongest predictors of cost-burdened status  
-- Certain counties exhibited significantly higher prevalence of housing cost burden  
-- Education level and employment status showed moderate associations with rent-to-income ratio  
 
----
 
-## 🖼️ Visualizations
-```markdown
-![Cost Burden by County](images/cost_burden_map.png)
-![Rent-to-Income Distribution](images/rent_income_plot.png)
 
 
 
