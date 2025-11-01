@@ -10,7 +10,7 @@ This project investigates housing cost burden in Georgia, defined as households 
 
 ## 🛠️ Skills & Tools Used
 - Programming: R
-- Libraries: tidyverse, dplyr, tidycensus 
+- Libraries: tidyverse, dplyr, tidycensus, ggplot2
 - Statistical Analysis: Multiple Linear Regression, Welch's Anova, Weighted Least Squares
 
 ---
@@ -64,6 +64,7 @@ households.
   - Renters:Black renters experience significantly higher cost burden compared to White and Other groups. 
 
 ---
+
 
 
 
