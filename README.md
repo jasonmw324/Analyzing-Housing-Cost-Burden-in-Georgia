@@ -66,6 +66,22 @@ households.
 ---
 
 
+## 🗂 Repository Structure
+```markdown
+Analyzing-Housing-Cost-Burden-in-Georgia/
+├── DATA/                                                   # Folder Containing Dataset
+│   ├── ga_housing_data.csv                                 # Dataset used for analysis        
+├── Poster/
+│   ├── Cost_Burdened_Housing_Georgia_Analysis_Poster.pdf   # Poster Summarizing Project and Results 
+├── Cost_Burdened_Housing_Analysis_Presentation_Slides.pdf  # Presentation Slides Summarizing Project                 ├── Cost_Burdened_Housing_Analysis_Report.pdf               # Final compiled PDF report generated from the Rmd file 
+├── Cost_Burdened_Housing_Georgia_Analysis.Rmd              # R Markdown file of report        
+├── README.md             
+├── apa.csl                                                 # Citation File
+├── corrplot.png                                            # Correlation Plot used in Report
+├── missing-hist.png                                        # Missing Data plot use in Report
+├── packages.bib                                            # Bibliography File
+└── pnas.csl                                                # Citation File
+
 
 
 
