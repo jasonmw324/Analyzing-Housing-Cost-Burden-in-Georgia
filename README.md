@@ -27,9 +27,7 @@ dedicated to housing costs)?
 
 ## 📊 Data Source
 - **Dataset name:** American Community Survey (ACS) 5-year estimates 2017-2021
-- **Source/Link:** [ACS Data via Census API](https://www.census.gov/programs-surveys/acs)   
-- **Number of observations / variables:** Varies by table; includes household income, rent, household size, and county-level identifiers  
-- **Any preprocessing notes:** Filtered for Georgia; calculated rent-to-income ratio; handled missing income and rent data  
+- **Source/Link:** [ACS Data via Census API](https://www.census.gov/programs-surveys/acs)    
 
 ---
 
@@ -81,6 +79,7 @@ Analyzing-Housing-Cost-Burden-in-Georgia/
 ├── missing-hist.png                                        # Missing Data plot use in Report
 ├── packages.bib                                            # Bibliography File
 └── pnas.csl                                                # Citation File
+
 
 
 
