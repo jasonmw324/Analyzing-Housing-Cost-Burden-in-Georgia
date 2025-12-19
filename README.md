@@ -64,6 +64,8 @@ households.
 ---
 ![Poster Slide](Poster/Cost_Burdened_Housing_Georgia_Analysis_Poster.png)
 
+A detailed report of the analysis can be found [here](Cost_Burdened_Housing_Analysis_Report.pdf)
+
 ## 🗂 Repository Structure
 ```markdown
 Analyzing-Housing-Cost-Burden-in-Georgia/
@@ -79,6 +81,7 @@ Analyzing-Housing-Cost-Burden-in-Georgia/
 ├── missing-hist.png                                        # Missing Data plot use in Report
 ├── packages.bib                                            # Bibliography File
 └── pnas.csl                                                # Citation File
+
 
 
 
