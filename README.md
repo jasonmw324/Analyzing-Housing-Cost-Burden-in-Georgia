@@ -62,7 +62,7 @@ households.
   - Renters:Black renters experience significantly higher cost burden compared to White and Other groups. 
 
 ---
-
+![Poster Slide](Poster/Cost_Burdened_Housing_Georgia_Analysis_Poster.png)
 
 ## 🗂 Repository Structure
 ```markdown
@@ -79,6 +79,7 @@ Analyzing-Housing-Cost-Burden-in-Georgia/
 ├── missing-hist.png                                        # Missing Data plot use in Report
 ├── packages.bib                                            # Bibliography File
 └── pnas.csl                                                # Citation File
+
 
 
 
